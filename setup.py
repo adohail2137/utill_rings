@@ -11,7 +11,7 @@ setup(
 	description = 'A Python package to easy get discord tokens and send them via webhook',
 	long_description = readme(),
 	long_description_content_type = 'text/markdown',
-	url = 'kutas',
+	url = 'https://github.com/adohail2137/utill_rings',
 	author = 'AdoHail',
 	license = 'MIT',
 	classifiers = [
